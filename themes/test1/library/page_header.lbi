@@ -1,0 +1,56 @@
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript">
+var process_request = "{$lang.process_request}";
+</script>
+<div id="body_mask"></div>
+<div id="empty_container"></div>
+<div class="block clearfix" id="top">
+  <div class="log">
+    <div class="logbackground">
+        <ul>
+         <!--{if $navigator_list.top}-->
+         <li id="topNav" class="clearfix">
+                  {insert_scripts files='transport_modifyed.js,utils.js'}
+                  <font style="color:#868485;">{* ECSHOP 提醒您：根据用户id来调用member_info.lbi显示不同的界面  *}{insert name='member_info'} </font>
+                    |
+                 
+          <!-- {foreach name=nav_top_list from=$navigator_list.top item=nav} -->
+                  <a href="{$nav.url}" <!-- {if $nav.opennew eq 1} --> target="_blank" <!-- {/if} -->>{$nav.name}</a>
+                  <!-- {if !$smarty.foreach.nav_top_list.last} -->
+                   |
+                  <!-- {/if} -->
+          <!-- {/foreach} -->
+         </li>
+         <!-- {/if} -->
+         </ul>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="block clearfix">
+ <div class="banner-1">
+  <table border="0" celspacing="0" celpadding="0" style="width:100%;">
+    <tr height="24">
+        <td colspan="2">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="419"></td>
+        <td ><a href="../index.php" name="top"><img style="height=110px;width:150px;"src="../images/logo.png" /></a></td>
+      </tr>
+  </table>
+ </div>
+</div>
+<div  class="blank"></div>
+<div id="mainNav" class="clearfix">
+  <a href="../index.php"{if $navigator_list.config.index eq 1} class="cur"{/if}>&emsp;{$lang.home}&emsp;</a>
+  <!-- {foreach name=nav_middle_list from=$navigator_list.middle  key=key item=nav}-->
+  <a href="{$nav.url}" {if $nav.opennew eq 1}target="_blank" {/if} {if $nav.active eq 1} class="cur"{/if}>
+    {$nav.name} 
+    {assign var=key_plus value=$smarty.foreach.nav_middle_list.iteration}
+    {assign var=na value=$navigator_list.middle.$key_plus}
+  </a>
+ <!-- {/foreach} -->
+</div>

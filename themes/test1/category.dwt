@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="{$keywords}" />
+<meta name="Description" content="{$description}" />
+<!-- TemplateBeginEditable name="doctitle" -->
+<title>{$page_title}</title>
+<!-- TemplateEndEditable --><!-- TemplateBeginEditable name="head" --><!-- TemplateEndEditable -->
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="icon" href="animated_favicon.gif" type="image/gif" />
+<link href="{$ecs_css_path}" rel="stylesheet" type="text/css" />
+<!-- {if $cat_style} -->
+<link href="{$cat_style}" rel="stylesheet" type="text/css" />
+<!-- {/if} -->
+{* 包含脚本文件 *}
+{insert_scripts files='jquery.js,json2.js'}
+{insert_scripts files='jssor.js,jssor.slider.js'}
+{insert_scripts files='common.js,compare.js,gototop.js'}
+</head>
+<body>
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<!--当前位置 start-->
+<div class="block box">
+ <div id="ur_here">
+  <!-- #BeginLibraryItem "/library/ur_here.lbi" --><!-- #EndLibraryItem -->
+ </div>
+</div>
+<!--当前位置 end-->
+<div class="blank"></div>
+<div class="block clearfix">
+  <!--left start-->
+  <div class="AreaL">
+    <!-- TemplateBeginEditable name="左边区域" -->
+<!-- #cart.lbi -->
+
+
+ <!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/category_tree.lbi" -->
+
+
+
+ <!-- #EndLibraryItem -->
+ <!-- #BeginLibraryItem "/library/history.lbi" --><!-- #EndLibraryItem -->
+<!-- TemplateEndEditable -->
+<!-- TemplateBeginEditable name="左边广告区域（宽200px）" -->
+<!-- TemplateEndEditable -->
+    <!--AD end-->
+  </div>
+  <!--left end-->
+  <!--right start-->
+  <div class="AreaR">
+	 <!--组合搜索 开始-->
+	  <!--{if $brands.1 || $price_grade.1 || $filter_attr_list}-->
+	  <div class="box_shadow">
+	  
+<table border="0" cellspacing="0" cellpadding="0" style="width:100%;padding:5px;">
+<tr>
+<td>
+<div  style="padding:5px;"><span class="h3_title">{$lang.goods_filter}</span></div>
+</td>
+</tr>
+<tr height="1"><td><table border="0" cellpadding="0" cellspacing="0" style="border-top:1px solid #cecece;height:1px;width: 100%;"><tr><td></td></tr></table></td></tr>
+<tr>
+<td>
+	  
+	  
+		 <div>
+			
+			<!--{if $brands.1}-->
+			<div class="screeBox">
+<table border="0" cellspacing="0" cellpadding="0" style="width:100%;">
+<tr>
+<td width="60" style="vertical-align:top;padding:4px;">
+			
+			  <font class="_strong">{$lang.brand}：</font>
+</td>			  
+<td style="">		
+				<div style="display: block;">
+				<!--{foreach from=$brands item=brand}-->
+				<div class="filter_div" style="">
+					<!-- {if $brand.selected} -->
+					<font class="filter_selected">{$brand.brand_name}</font>
+					<!-- {else} -->
+					<a href="{$brand.url}" class="filter_a">{$brand.brand_name}</a>&nbsp;
+					<!-- {/if} -->
+				</div>
+				<!--{/foreach}-->
+				</div>
+</td>
+</tr>
+</table>				
+			</div>
+			<!--{/if}-->
+			<!--{if $price_grade.1}-->
+			<div class="screeBox">
+<table border="0" cellspacing="0" cellpadding="0" style="width:100%;">
+<tr>
+<td width="60" style="vertical-align:top;padding:4px;">			
+			
+			
+			
+			
+			<font class="_strong">{$lang.price}：</font>
+			
+</td>			  
+<td style="">			
+			
+			
+			
+			
+			<div style="display: block;">
+			<!--{foreach from=$price_grade item=grade}-->
+			<div class="filter_div" style="">
+				<!-- {if $grade.selected} -->
+				<font class="filter_selected">{$grade.price_range}</font>
+				<!-- {else} -->
+				<a href="{$grade.url}" class="filter_a">{$grade.price_range}</a>&nbsp;
+				<!-- {/if} -->
+			</div>
+			<!--{/foreach}-->
+			</div>
+			
+			
+			
+			
+</td>
+</tr>
+</table>				
+			</div>
+			<!--{/if}-->
+			<!--{foreach from=$filter_attr_list item=filter_attr}-->
+      <div class="screeBox">
+<table border="0" cellspacing="0" cellpadding="0" style="width:100%;">
+<tr>
+<td width="60" style="vertical-align:top;padding:4px;">	  
+	  
+	  
+	  
+	  
+	  
+			<font class="_strong">{$filter_attr.filter_attr_name|escape:html} :</font>
+</td>			  
+<td style="">			
+			
+			<div style="display: block;">
+			<!--{foreach from=$filter_attr.attr_list item=attr}-->
+			<div class="filter_div" style="">
+				<!-- {if $attr.selected} -->
+				<font class="filter_selected">{$attr.attr_value}</font>
+				<!-- {else} -->
+				<a href="{$attr.url}" class="filter_a">{$attr.attr_value}</a>&nbsp;
+				<!-- {/if} -->
+			</div>
+			<!--{/foreach}-->
+			</div>
+			
+			
+			
+</td>
+</tr>
+</table>				
+			</div>
+      <!--{/foreach}-->
+		 </div>
+		 
+		 
+		 
+		 
+		 
+		 
+</td>
+</tr>
+</table>		 
+		</div>
+		<div class="blank5"></div>
+	  <!-- {/if} -->
+	 <!--组合搜索 结束-->
+   <!-- TemplateBeginEditable name="右边区域" -->
+<!-- #BeginLibraryItem "/library/recommend_best.lbi" -->
+
+<!-- {if $best_goods} -->
+<!-- {if $cat_rec_sign neq 1} -->
+<div class="blank5"></div>
+  <!-- {/if} -->
+<!-- {/if} -->
+
+ <!-- #EndLibraryItem -->
+  <!-- #BeginLibraryItem "/library/goods_list.lbi" --><!-- #EndLibraryItem -->
+  <!-- #BeginLibraryItem "/library/pages.lbi" --><!-- #EndLibraryItem -->
+<!-- TemplateEndEditable -->
+
+
+  </div>  
+  <!--right end-->
+</div>
+<div class="blank5"></div>
+
+<!--友情链接 start-->
+<!--{if $img_links  or $txt_links }-->
+<div id="bottomNav" class="box">
+ <div class="box_1">
+  <div class="links clearfix">
+    <!--开始图片类型的友情链接{foreach from=$img_links item=link}-->
+    <a href="{$link.url}" target="_blank" title="{$link.name}"><img src="{$link.logo}" alt="{$link.name}" border="0" /></a>
+    <!--结束图片类型的友情链接{/foreach}-->
+    <!-- {if $txt_links} -->
+    <!--开始文字类型的友情链接{foreach from=$txt_links item=link}-->
+    [<a href="{$link.url}" target="_blank" title="{$link.name}">{$link.name}</a>] 
+    <!--结束文字类型的友情链接{/foreach}-->
+    <!-- {/if} -->
+  </div>
+ </div>
+</div>
+<!--{/if}-->
+<!--友情链接 end-->
+<div class="blank"></div>
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+</body>
+</html>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<bcaster>
+    <item item_url="data/afficheimg/20150227hbwnkh.jpg" link="http://" text="鸡腿" sort="0" position="main" price="98" title="" />
+    <item item_url="data/afficheimg/20150227yoveqw.jpg" link="http://" text="瘦肉" sort="0" position="main" price="233" title="" />
+    <item item_url="data/afficheimg/20150227pitbcs.jpg" link="http://" text="小肉" sort="0" position="main" price="585" title="" />
+    <item item_url="data/afficheimg/20150227yblspu.jpg" link="http://" text="" sort="0" position="left" price="" title="" />
+    <item item_url="data/afficheimg/20150227aklauk.jpg" link="http://" text="" sort="0" position="top" price="" title="" />
+    <item item_url="data/afficheimg/20150227lslhku.jpg" link="http://" text="" sort="0" position="right" price="" title="" />
+    <item item_url="data/afficheimg/20150227xmsawc.jpg" link="http://" text="鱼" sort="0" position="main" price="432" title="" />
+    <item item_url="data/afficheimg/20150227ukeuzr.jpg" link="http://" text="五花肉" sort="0" position="main" price="999" title="" />
+    <item item_url="data/afficheimg/20150227vqkyqk.JPG" link="http://" text="鸡翅" sort="0" position="main" price="693" title="" />
+</bcaster>
