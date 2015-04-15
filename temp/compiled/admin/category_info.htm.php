@@ -33,6 +33,713 @@
         </td>
       </tr>
 
+	  
+	  
+	  
+	  
+      <tr>
+            <td class="label">图标</td>
+            <td>
+              <input type="file" name="cat_icon_img" size="35" />
+              <?php if ($this->_var['have_icon']): ?>
+                <a href="../data/caticon/<?php echo $this->_var['cat_info']['cat_id']; ?>.png" target="_blank"><img src="images/yes.gif" border="0" /></a>
+              <?php else: ?>
+                <img src="images/no.gif" />
+              <?php endif; ?>
+            </td>
+         </tr>
+		<tr>
+        <td class="label">主题色:</td>
+        <td><input class="color" name="theme_color" <?php if ($this->_var['cat_info']['theme_color'] != ""): ?> value="<?php echo $this->_var['cat_info']['theme_color']; ?>"<?php endif; ?>/>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="label">设置为首页分类馆</td>
+        <td><input type="checkbox" name="show_banner_in_home_page" value="1" <?php if ($this->_var['cat_info']['show_banner_in_home_page'] == 1): ?> checked="true"<?php endif; ?> onClick="showUpload('banner')"/></td>
+      </tr>
+      <tr id="banner" style="<?php if ($this->_var['cat_info']['show_banner_in_home_page'] != 1): ?>display:none;<?php endif; ?>">
+      	<td class="label"></td>
+      	<td>
+		
+		
+		<table border="0" cellspacing="0" cellpadding="0" width="100%" id="gallery_table" class="gallery_table" align="center" style="background-color:#4FB75E;">
+          <!-- 鍥剧墖鍒楄〃 -->
+
+		
+		
+		
+		
+		
+		
+<tr height="7"><td></td></tr>		
+		
+		
+		
+		 <tr>
+		 <td>
+      	<table width="50%" id="gallery_table_top" class="gallery_table" align="center" style="">
+          <!-- 鍥剧墖鍒楄〃 -->
+		  <tr><td><font class="category_banner_catption">顶部</font></td></tr>
+          <tr>
+            <td>
+              <?php $_from = $this->_var['img_list_top']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('i', 'img');if (count($_from)):
+    foreach ($_from AS $this->_var['i'] => $this->_var['img']):
+?>
+              <div id="gallery_<?php echo $this->_var['img']['id']; ?>" style="float:left; text-align:center; border: 1px solid #DADADA; margin: 4px; padding:2px;">
+				<table border="0" cellspacing="3" cellpadding="3" style="width:100%;">
+				<tr>
+				<td>
+                <a href="javascript:;" onclick="if (confirm('确定删除？')) dropImg('<?php echo $this->_var['img']['id']; ?>',0)">[-]</a><br />
+				</td>
+				</tr>
+				<tr>
+				<td>
+                <a href="goods.php?act=show_image&img_url=<?php echo $this->_var['img']['url']; ?>" target="_blank">
+                <img src="../<?php echo $this->_var['img']['src']; ?>" width="100" height="" border="0" />
+                </a>
+				</td>
+				</tr>
+				<tr height="10"><td></td></tr>
+				<tr>
+				<td  style="text-align:left;">
+                描述： <input type="text" value="<?php echo htmlspecialchars($this->_var['img']['desc']); ?>" size="15" name="old_img_desc_top[<?php echo $this->_var['img']['id']; ?>]" />
+				</td>
+				</tr>
+                <tr>
+				<td style="text-align:left;">
+                链接： <input type="text" value="<?php echo htmlspecialchars($this->_var['img']['url']); ?>" size="15" name="old_img_url_top[<?php echo $this->_var['img']['id']; ?>]" />
+				</td>
+				</tr>
+				<tr>
+				<td style="text-align:left;">
+                顺序： <input type="text" value="<?php echo htmlspecialchars($this->_var['img']['order']); ?>" size="3" name="old_img_order_top[<?php echo $this->_var['img']['id']; ?>]" />
+				</td>
+				</tr>
+				<tr>
+				<td  style="text-align:left;">
+				<input type="checkbox" name="old_img_show_top[<?php echo $this->_var['img']['id']; ?>]" value="1" <?php if ($this->_var['img']['show'] == 1): ?>checked<?php endif; ?>> Show
+				<input type="hidden" value="<?php echo htmlspecialchars($this->_var['img']['id']); ?>" name="old_img_id_top[<?php echo $this->_var['img']['id']; ?>]" />				
+				</td>
+				</tr>
+				</table>
+              </div>
+              <?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+            </td>
+          </tr>
+          <!-- 涓婁紶鍥剧墖 -->
+          <tr>
+            <td>
+			
+			<table id="adding_image_table_top" border="0" cellspacing="10" cellpadding="0" style="width:100%;">
+			<tr>
+			<td style="width:10px;">
+			
+			</td>
+			<td>
+              banner描述
+			</td>
+			<td>
+              banner上传
+			</td>
+			<td>
+              banner链接
+			</td>
+			<td>
+             顺序
+			</td>
+			<td>
+             Show
+			</td>
+			</tr>	
+			
+			<tr height="1"><td colspan="7"><table border="0" cellpadding="0" cellspacing="0" style="border-top:1px dotted #bbbbbb;height:1px;width: 100%;"><tr><td></td></tr></table></td></tr>
+
+
+			
+			<tr>
+			<td style="width:10px;">
+			<a href="javascript:;" onclick="addImg(this, 'adding_image_table_top')">[+]</a>
+			</td>
+			<td>
+              <input type="text" name="img_desc_top[]" size="20" />
+			</td>
+			<td>
+              <input type="file" name="img_file_top[]" />
+			</td>
+			<td>
+              <input type="text" size="40" value="<?php echo $this->_var['lang']['img_file']; ?>" style="color:#aaa;" onfocus="if (this.value == '<?php echo $this->_var['lang']['img_file']; ?>'){this.value='http://';this.style.color='#000';}" name="img_url_top[]"/>
+			</td>
+			<td>
+              <input type="text" size="3" name="img_order_top[]" value="0"/>
+			  <input type="hidden" name="img_position_top[]" value="top"/>
+			</td>
+			<td>
+			<input type="checkbox" checked value="1" name="" onclick="if(this.checked){this.nextSibling.value = 1;}else{this.nextSibling.value = 0;}"/><input type="hidden" value="1" name="img_show_top[]"/>
+			</td>
+			</tr>		
+			</table>
+			
+            </td>
+          </tr>
+        </table>
+		</td>
+		</tr>		
+		
+		
+		
+		
+		
+<tr height="7"><td></td></tr>		
+		
+		
+		
+		
+		 <tr>
+		 <td>
+      	<table width="50%" id="gallery_table_right" class="gallery_table" align="center" style="">
+          <!-- 鍥剧墖鍒楄〃 -->
+          <tr><td><font class="category_banner_catption">右侧</font></td></tr>		  
+          <tr>
+            <td>
+              <?php $_from = $this->_var['img_list_right']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('i', 'img');if (count($_from)):
+    foreach ($_from AS $this->_var['i'] => $this->_var['img']):
+?>
+              <div id="gallery_<?php echo $this->_var['img']['id']; ?>" style="float:left; text-align:center; border: 1px solid #DADADA; margin: 4px; padding:2px;">
+				<table border="0" cellspacing="3" cellpadding="3" style="width:100%;">
+				<tr>
+				<td>
+                <a href="javascript:;" onclick="if (confirm('确定删除？')) dropImg('<?php echo $this->_var['img']['id']; ?>',0)">[-]</a><br />
+				</td>
+				</tr>
+				<tr>
+				<td>
+                <a href="goods.php?act=show_image&img_url=<?php echo $this->_var['img']['url']; ?>" target="_blank">
+                <img src="../<?php echo $this->_var['img']['src']; ?>" width="100" border="0" />
+                </a>
+				</td>
+				</tr>
+				<tr height="10"><td></td></tr>
+				<tr>
+				<td  style="text-align:left;">
+                描述： <input type="text" value="<?php echo htmlspecialchars($this->_var['img']['desc']); ?>" size="15" name="old_img_desc_right[<?php echo $this->_var['img']['id']; ?>]" />
+				</td>
+				</tr>
+                <tr>
+				<td style="text-align:left;">
+                链接： <input type="text" value="<?php echo htmlspecialchars($this->_var['img']['url']); ?>" size="15" name="old_img_url_right[<?php echo $this->_var['img']['id']; ?>]" />
+				</td>
+				</tr>
+				<tr>
+				<td style="text-align:left;">
+                顺序： <input type="text" value="<?php echo htmlspecialchars($this->_var['img']['order']); ?>" size="3" name="old_img_order_right[<?php echo $this->_var['img']['id']; ?>]" />
+				</td>
+				</tr>
+				<tr>
+				<td  style="text-align:left;">
+				<input type="checkbox" name="old_img_show_right[<?php echo $this->_var['img']['id']; ?>]" value="1" <?php if ($this->_var['img']['show'] == 1): ?>checked<?php endif; ?>> Show
+				<input type="hidden" value="<?php echo htmlspecialchars($this->_var['img']['id']); ?>" name="old_img_id_right[<?php echo $this->_var['img']['id']; ?>]" />				
+				</td>
+				</tr>
+				</table>
+              </div>
+              <?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+            </td>
+          </tr>
+          <!-- 涓婁紶鍥剧墖 -->
+          <tr>
+            <td>
+			
+			<table id="adding_image_table_right" border="0" cellspacing="10" cellpadding="0" style="width:100%;">
+			<tr>
+			<td style="width:10px;">
+			
+			</td>
+			<td>
+              banner描述
+			</td>
+			<td>
+              banner上传
+			</td>
+			<td>
+              banner链接
+			</td>
+			<td>
+             顺序
+			</td>
+			<td>
+             Show
+			</td>
+			</tr>	
+			
+			<tr height="1"><td colspan="7"><table border="0" cellpadding="0" cellspacing="0" style="border-top:1px dotted #bbbbbb;height:1px;width: 100%;"><tr><td></td></tr></table></td></tr>
+
+
+			
+			<tr>
+			<td style="width:10px;">
+			<a href="javascript:;" onclick="addImg(this, 'adding_image_table_right')">[+]</a>
+			</td>
+			<td>
+              <input type="text" name="img_desc_right[]" size="20" />
+			</td>
+			<td>
+              <input type="file" name="img_file_right[]" />
+			</td>
+			<td>
+              <input type="text" size="40" value="<?php echo $this->_var['lang']['img_file']; ?>" style="color:#aaa;" onfocus="if (this.value == '<?php echo $this->_var['lang']['img_file']; ?>'){this.value='http://';this.style.color='#000';}" name="img_url_right[]"/>
+			</td>
+			<td>
+              <input type="text" size="3" name="img_order_right[]" value="0"/>
+			  <input type="hidden" name="img_position_right[]" value="right"/>
+			</td>
+			<td>
+			<input type="checkbox" checked value="1" name="" onclick="if(this.checked){this.nextSibling.value = 1;}else{this.nextSibling.value = 0;}"/><input type="hidden" value="1" name="img_show_right[]"/>
+			</td>			
+			</tr>		
+			</table>
+			
+            </td>
+          </tr>
+        </table>
+		</td>
+		</tr>
+		
+		
+<tr height="7"><td></td></tr>		
+		
+		
+		 <tr>
+		 <td>
+      	<table width="50%" id="gallery_table_left" class="gallery_table" align="center" style="">
+          <!-- 鍥剧墖鍒楄〃 -->
+          <tr><td><font class="category_banner_catption">左侧</font></td></tr>		  
+          <tr>
+            <td>
+              <?php $_from = $this->_var['img_list_left']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('i', 'img');if (count($_from)):
+    foreach ($_from AS $this->_var['i'] => $this->_var['img']):
+?>
+              <div id="gallery_<?php echo $this->_var['img']['id']; ?>" style="float:left; text-align:center; border: 1px solid #DADADA; margin: 4px; padding:2px;">
+				<table border="0" cellspacing="3" cellpadding="3" style="width:100%;">
+				<tr>
+				<td>
+                <a href="javascript:;" onclick="if (confirm('确定删除？')) dropImg('<?php echo $this->_var['img']['id']; ?>',0)">[-]</a><br />
+				</td>
+				</tr>
+				<tr>
+				<td>
+                <a href="goods.php?act=show_image&img_url=<?php echo $this->_var['img']['url']; ?>" target="_blank">
+                <img src="../<?php echo $this->_var['img']['src']; ?>" width="100" border="0" />
+                </a>
+				</td>
+				</tr>
+				<tr height="10"><td></td></tr>
+				<tr>
+				<td  style="text-align:left;">
+                描述： <input type="text" value="<?php echo htmlspecialchars($this->_var['img']['desc']); ?>" size="15" name="old_img_desc_left[<?php echo $this->_var['img']['id']; ?>]" />
+				</td>
+				</tr>
+                <tr>
+				<td style="text-align:left;">
+                链接： <input type="text" value="<?php echo htmlspecialchars($this->_var['img']['url']); ?>" size="15" name="old_img_url_left[<?php echo $this->_var['img']['id']; ?>]" />
+				</td>
+				</tr>
+				<tr>
+				<td style="text-align:left;">
+                顺序： <input type="text" value="<?php echo htmlspecialchars($this->_var['img']['order']); ?>" size="3" name="old_img_order_left[<?php echo $this->_var['img']['id']; ?>]" />
+				</td>
+				</tr>
+				<tr>
+				<td  style="text-align:left;">
+				<input type="checkbox" name="old_img_show_left[<?php echo $this->_var['img']['id']; ?>]" value="1" <?php if ($this->_var['img']['show'] == 1): ?>checked<?php endif; ?>> Show
+				<input type="hidden" value="<?php echo htmlspecialchars($this->_var['img']['id']); ?>" name="old_img_id_left[<?php echo $this->_var['img']['id']; ?>]" />
+				</td>
+				</tr>
+				</table>
+              </div>
+              <?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+            </td>
+          </tr>
+          <!-- 涓婁紶鍥剧墖 -->
+          <tr>
+            <td>
+			
+			<table id="adding_image_table_left" border="0" cellspacing="10" cellpadding="0" style="width:100%;">
+			<tr>
+			<td style="width:10px;">
+			
+			</td>
+			<td>
+              banner描述
+			</td>
+			<td>
+              banner上传
+			</td>
+			<td>
+              banner链接
+			</td>
+			<td>
+             顺序
+			</td>
+			<td>
+             Show
+			</td>
+			</tr>	
+			
+			<tr height="1"><td colspan="7"><table border="0" cellpadding="0" cellspacing="0" style="border-top:1px dotted #bbbbbb;height:1px;width: 100%;"><tr><td></td></tr></table></td></tr>
+
+
+			
+			<tr>
+			<td style="width:10px;">
+			<a href="javascript:;" onclick="addImg(this, 'adding_image_table_left')">[+]</a>
+			</td>
+			<td>
+              <input type="text" name="img_desc_left[]" size="20" />
+			</td>
+			<td>
+              <input type="file" name="img_file_left[]" />
+			</td>
+			<td>
+              <input type="text" size="40" value="<?php echo $this->_var['lang']['img_file']; ?>" style="color:#aaa;" onfocus="if (this.value == '<?php echo $this->_var['lang']['img_file']; ?>'){this.value='http://';this.style.color='#000';}" name="img_url_left[]"/>
+			</td>
+			<td>
+              <input type="text" size="3" name="img_order_left[]" value="0"/>
+			  <input type="hidden" name="img_position_left[]" value="left"/>
+			</td>
+			<td>
+			<input type="checkbox" checked value="1" name="" onclick="if(this.checked){this.nextSibling.value = 1;}else{this.nextSibling.value = 0;}"/><input type="hidden" value="1" name="img_show_left[]"/>
+			</td>
+			</tr>		
+			</table>
+			
+            </td>
+          </tr>
+        </table>
+		</td>
+		</tr>
+		
+		
+		
+		
+		
+<tr height="7"><td></td></tr>		
+		
+		
+		
+		 <tr>
+		 <td>
+      	<table width="50%" id="gallery_table_bottom" class="gallery_table" align="center" style="">
+          <!-- 鍥剧墖鍒楄〃 -->
+          <tr><td><font class="category_banner_catption">底部</font></td></tr>		  
+          <tr>
+            <td>
+              <?php $_from = $this->_var['img_list_bottom']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('i', 'img');if (count($_from)):
+    foreach ($_from AS $this->_var['i'] => $this->_var['img']):
+?>
+              <div id="gallery_<?php echo $this->_var['img']['id']; ?>" style="float:left; text-align:center; border: 1px solid #DADADA; margin: 4px; padding:2px;">
+				<table border="0" cellspacing="3" cellpadding="3" style="width:100%;">
+				<tr>
+				<td>
+                <a href="javascript:;" onclick="if (confirm('确定删除？')) dropImg('<?php echo $this->_var['img']['id']; ?>',0)">[-]</a><br />
+				</td>
+				</tr>
+				<tr>
+				<td>
+                <a href="goods.php?act=show_image&img_url=<?php echo $this->_var['img']['url']; ?>" target="_blank">
+                <img src="../<?php echo $this->_var['img']['src']; ?>" width="100" border="0" />
+                </a>
+				</td>
+				</tr>
+				<tr height="10"><td></td></tr>
+				<tr>
+				<td  style="text-align:left;">
+                描述： <input type="text" value="<?php echo htmlspecialchars($this->_var['img']['desc']); ?>" size="15" name="old_img_desc_bottom[<?php echo $this->_var['img']['id']; ?>]" />
+				</td>
+				</tr>
+                <tr>
+				<td style="text-align:left;">
+                链接： <input type="text" value="<?php echo htmlspecialchars($this->_var['img']['url']); ?>" size="15" name="old_img_url_bottom[<?php echo $this->_var['img']['id']; ?>]" />
+				</td>
+				</tr>
+				<tr>
+				<td style="text-align:left;">
+                顺序： <input type="text" value="<?php echo htmlspecialchars($this->_var['img']['order']); ?>" size="3" name="old_img_order_bottom[<?php echo $this->_var['img']['id']; ?>]" />
+				</td>
+				<tr>
+				<td  style="text-align:left;">
+				<input type="checkbox" name="old_img_show_bottom[<?php echo $this->_var['img']['id']; ?>]" value="1" <?php if ($this->_var['img']['show'] == 1): ?>checked<?php endif; ?>> Show
+				<input type="hidden" value="<?php echo htmlspecialchars($this->_var['img']['id']); ?>" name="old_img_id_bottom[<?php echo $this->_var['img']['id']; ?>]" />
+				</td>
+				</tr>
+				</table>
+              </div>
+              <?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+            </td>
+          </tr>
+          <!-- 涓婁紶鍥剧墖 -->
+          <tr>
+            <td>
+			
+			<table id="adding_image_table_bottom" border="0" cellspacing="10" cellpadding="0" style="width:100%;">
+			<tr>
+			<td style="width:10px;">
+			
+			</td>
+			<td>
+              banner描述
+			</td>
+			<td>
+              banner上传
+			</td>
+			<td>
+              banner链接
+			</td>
+			<td>
+             顺序
+			</td>
+			<td>
+             Show
+			</td>
+			</tr>	
+			
+			<tr height="1"><td colspan="7"><table border="0" cellpadding="0" cellspacing="0" style="border-top:1px dotted #bbbbbb;height:1px;width: 100%;"><tr><td></td></tr></table></td></tr>
+
+
+			
+			<tr>
+			<td style="width:10px;">
+			<a href="javascript:;" onclick="addImg(this, 'adding_image_table_bottom')">[+]</a>
+			</td>
+			<td>
+              <input type="text" name="img_desc_bottom[]" size="20" />
+			</td>
+			<td>
+              <input type="file" name="img_file_bottom[]" />
+			</td>
+			<td>
+              <input type="text" size="40" value="<?php echo $this->_var['lang']['img_file']; ?>" style="color:#aaa;" onfocus="if (this.value == '<?php echo $this->_var['lang']['img_file']; ?>'){this.value='http://';this.style.color='#000';}" name="img_url_bottom[]"/>
+			</td>
+			<td>
+              <input type="text" size="3" name="img_order_bottom[]" value="0"/>
+			  <input type="hidden" name="img_position_bottom[]" value="bottom"/>
+			</td>
+			<td>
+			<input type="checkbox" checked value="1" name="" onclick="if(this.checked){this.nextSibling.value = 1;}else{this.nextSibling.value = 0;}"/><input type="hidden" value="1" name="img_show_bottom[]"/>
+			</td>
+			</tr>		
+			</table>
+			
+            </td>
+          </tr>
+        </table>
+		</td>
+		</tr>
+		
+		
+		
+		
+		
+<tr height="7"><td></td></tr>		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+        </table>
+      	</td>
+      </tr>
+      <!--分类页显示的BANNER START-->
+      <tr>
+        <td class="label">设置分类页Banner</td>
+        <td><input type="checkbox" name="show_banner_in_category_page" value="1" <?php if ($this->_var['cat_info']['show_banner_in_category_page'] == 1): ?> checked="true"<?php endif; ?> onClick="showUpload('pagebanner')" /></td>
+      </tr>
+      <tr id="pagebanner" style="<?php if ($this->_var['cat_info']['show_banner_in_category_page'] != 1): ?>display:none;<?php endif; ?>">
+      	<td class="label"></td>
+      	<td>
+      	<table border="0" cellspacing="0" cellpadding="0" width="100%" id="gallery_table2" class="gallery_table" align="center" style="background-color:#4F80B7;">
+		
+		<tr height="7"><td></td></tr>		
+          <tr>
+            <td>		
+      	<table border="0" cellspacing="0" cellpadding="0" width="100%" id="gallery_table2_top" class="gallery_table" align="center" style="">		
+          <!-- 鍥剧墖鍒楄〃 -->
+          <tr>
+            <td>
+              <?php $_from = $this->_var['img_list2']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('i', 'img');if (count($_from)):
+    foreach ($_from AS $this->_var['i'] => $this->_var['img']):
+?>
+              <div id="gallery_page_<?php echo $this->_var['img']['id']; ?>" style="float:left; text-align:center; border: 1px solid #DADADA; margin: 4px; padding:2px;">
+				<table border="0" cellspacing="3" cellpadding="3" style="width:100%;">
+				<tr>
+				<td>
+                <a href="javascript:;" onclick="if (confirm('确定删除？')) dropImg('<?php echo $this->_var['img']['id']; ?>',1)">[-]</a><br />
+				</td>
+				</tr>
+				<tr>
+				<td>
+                <a href="goods.php?act=show_image&img_url=<?php echo $this->_var['img']['url']; ?>" target="_blank">
+                <img src="../<?php echo $this->_var['img']['src']; ?>" width="100" border="0" />
+                </a>
+				</td>
+				</tr>
+				<tr height="10"><td></td></tr>
+				<tr>
+				<td  style="text-align:left;">
+                描述： <input type="text" value="<?php echo htmlspecialchars($this->_var['img']['desc']); ?>" size="15" name="old_img_desc2[<?php echo $this->_var['img']['id']; ?>]" />
+				</td>
+				</tr>
+                <tr>
+				<td style="text-align:left;">
+                链接： <input type="text" value="<?php echo htmlspecialchars($this->_var['img']['url']); ?>" size="15" name="old_img_url2[<?php echo $this->_var['img']['id']; ?>]" />
+				</td>
+				</tr>
+				<tr>
+				<td style="text-align:left;">
+                顺序： <input type="text" value="<?php echo htmlspecialchars($this->_var['img']['order']); ?>" size="3" name="old_img_order2[<?php echo $this->_var['img']['id']; ?>]" />
+				</td>
+				</tr>
+				<tr>
+				<td  style="text-align:left;">
+				<input type="checkbox" name="old_img_show2[<?php echo $this->_var['img']['id']; ?>]" value="1" <?php if ($this->_var['img']['show'] == 1): ?>checked<?php endif; ?>> Show
+				<input type="hidden" value="<?php echo htmlspecialchars($this->_var['img']['id']); ?>" name="old_img_id2[<?php echo $this->_var['img']['id']; ?>]" />
+				</td>
+				</tr>
+				</table>
+              </div>
+              <?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+            </td>
+          </tr>
+          <!-- 涓婁紶鍥剧墖 -->
+          <tr>
+            <td>
+			
+			<table id="adding_image_table2" border="0" cellspacing="10" cellpadding="0" style="width:100%;">
+			<tr>
+			<td style="width:10px;">
+			
+			</td>
+			<td>
+              banner描述
+			</td>
+			<td>
+              banner上传
+			</td>
+			<td>
+              banner链接
+			</td>
+			<td>
+             顺序
+			</td>
+			<td>
+             Show
+			</td>
+			</tr>	
+			
+			<tr height="1"><td colspan="7"><table border="0" cellpadding="0" cellspacing="0" style="border-top:1px dotted #bbbbbb;height:1px;width: 100%;"><tr><td></td></tr></table></td></tr>
+
+
+			
+			<tr>
+			<td style="width:10px;">
+			<a href="javascript:;" onclick="addImg(this, 'adding_image_table2')">[+]</a>
+			</td>
+			<td>
+              <input type="text" name="img_desc2[]" size="20" />
+			</td>
+			<td>
+              <input type="file" name="img_file2[]" />
+			</td>
+			<td>
+              <input type="text" size="40" value="<?php echo $this->_var['lang']['img_file']; ?>" style="color:#aaa;" onfocus="if (this.value == '<?php echo $this->_var['lang']['img_file']; ?>'){this.value='http://';this.style.color='#000';}" name="img_url2[]"/>
+			</td>
+			<td>
+              <input type="text" size="3" name="img_order2[]" value="0"/>
+			  <input type="hidden" name="img_position2[]" value="none"/>
+			</td>
+			<td>
+			<input type="checkbox" checked value="1" name="" onclick="if(this.checked){this.nextSibling.value = 1;}else{this.nextSibling.value = 0;}"/><input type="hidden" value="1" name="img_show2[]"/>
+			</td>
+			</tr>		
+			</table>
+			
+            </td>
+          </tr>
+		  
+	  
+		  
+		  
+             </table>		  
+            </td>
+          </tr>
+
+
+
+<tr height="7"><td></td></tr>				  
+        </table>
+      	</td>
+      </tr>
+      <!--分类页显示的BANNER END-->
+
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
       <tr>
         <td class="label"><?php echo $this->_var['lang']['is_show']; ?>:</td>
         <td>
@@ -164,7 +871,7 @@ if ($this->_foreach['filter_attr_tab']['total'] > 0):
     <input type="hidden" name="cat_id" value="<?php echo $this->_var['cat_info']['cat_id']; ?>" />
   </form>
 </div>
-<?php echo $this->smarty_insert_scripts(array('files'=>'../js/utils.js,validator.js')); ?>
+<?php echo $this->smarty_insert_scripts(array('files'=>'../js/utils.js,validator.js,jscolor/jscolor.js')); ?>
 
 <script language="JavaScript">
 <!--
@@ -237,6 +944,78 @@ function removeFilterAttr(obj)
   tbl.deleteRow(row);
 }
 //-->
+
+
+function showUpload (box) {
+        
+	if (document.getElementById(box).style.display == 'none'){document.getElementById(box).style.display = 'table-row';}
+	else{
+	document.getElementById(box).style.display = 'none';
+	}
+
+}
+
+
+/**
+* 添加上传图片的row
+*/
+function addImg(obj,table_id)
+{
+  var src  = obj.parentNode.parentNode;
+  var idx  = rowindex(src);
+
+  var tbl  = document.getElementById(table_id);
+
+  var row  = tbl.insertRow(idx - 3);
+  var cell1 = row.insertCell(0);
+  var cell2 = row.insertCell(1);
+  var cell3 = row.insertCell(2);
+  var cell4 = row.insertCell(3);
+  var cell5 = row.insertCell(4);
+  var cell6 = row.insertCell(5);
+  cell1.innerHTML = src.cells[0].innerHTML.replace(/(.*)(addImg)(.*)(\[)(\+)/i, "$1removeImg$3$4-");
+  cell2.innerHTML = src.cells[1].innerHTML.replace(/(.*)(addImg)(.*)(\[)(\+)/i, "$1removeImg$3$4-");
+  cell3.innerHTML = src.cells[2].innerHTML.replace(/(.*)(addImg)(.*)(\[)(\+)/i, "$1removeImg$3$4-");
+  cell4.innerHTML = src.cells[3].innerHTML.replace(/(.*)(addImg)(.*)(\[)(\+)/i, "$1removeImg$3$4-");
+  cell5.innerHTML = src.cells[4].innerHTML.replace(/(.*)(addImg)(.*)(\[)(\+)/i, "$1removeImg$3$4-");
+  	  //checkbox and hidden//
+	  cell6.innerHTML = src.cells[5].innerHTML;
+	  cell6.innerHTML = cell6.innerHTML.replace("<input type=\"hidden\" value=\"0\"", "<input type=\"hidden\" value=\"1\"");
+	  cell6.innerHTML = cell6.innerHTML;
+}
+
+/**
+* 鍒犻櫎鍥剧墖涓婁紶
+*/
+function removeImg(obj,table_id)
+{
+  var row = rowindex(obj.parentNode.parentNode);
+
+  var tbl = document.getElementById(table_id);
+
+  tbl.deleteRow(row);
+}
+
+/**
+* 鍒犻櫎鍥剧墖
+*/
+function dropImg(imgId,type)
+{
+	var cat_id = document.forms['theForm'].elements['cat_id'].value;
+	Ajax.call('category.php?act=drop_image', "img_id="+imgId+"&cat_id="+cat_id+"&type="+type, dropImgResponse, "GET", "JSON");
+}
+
+function dropImgResponse(result)
+{
+  if (result.error == 0)
+  {
+	var id = '';
+	if (result.content.type == 0){id = 'gallery_';}
+	else if (result.content.type == 1){id = 'gallery_page_';}
+	  document.getElementById(id + result.content.id).style.display = 'none';
+  }
+}
+
 </script>
 
 <?php echo $this->fetch('pagefooter.htm'); ?>

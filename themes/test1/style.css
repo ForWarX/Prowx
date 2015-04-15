@@ -933,8 +933,8 @@ font-family: 'Microsoft YaHei UI','Microsoft YaHei',DengXian,SimSun,'Segoe UI',T
 	   .goodsItem:hover {border:1px solid #4fb75e;-webkit-box-shadow: 0px 0px 5px 2px rgba(168,168,168,.8);
 -moz-box-shadow: 0px 0px 5px 2px rgba(168,168,168,.8);
 box-shadow: 0px 0px 5px 2px rgba(168,168,168,.8);}
-.goodsItem:hover .goods_action li a{ color:#fff;background-color:#4fb75e;border-right:1px solid #41934c;border-top: 1px solid #41934c;}
-.goodsItem:hover .goods_action li:last-child a{border-right: none;}
+.goodsItem:hover .goods_action li a{ /*color:#fff;background-color:#4fb75e;border-right:1px solid #41934c;border-top: 1px solid #41934c;*/}
+.goodsItem:hover .goods_action li:last-child a{/*border-right: none;*/}
        .goodsimg{width:100px; height:100px; border:0px solid #eef8ff; margin-bottom:4px;}
        .goodsItem img{}
 	   .boxCenterList li.goodsimg_original{width:48px; height:50px;margin-right: 10px;}
@@ -971,7 +971,7 @@ box-shadow: 0px 0px 5px 2px rgba(168,168,168,.8);}
 			}
 			.goods_action li:last-child a {border-right: none;}
 			.goods_action li a:hover {
-				color:#fff;
+				/*color:#fff;*/
 			}
 			.goods_action li a:hover .goods_action li a{
 			
@@ -987,7 +987,7 @@ box-shadow: 0px 0px 5px 2px rgba(168,168,168,.8);}
 	.goods_action_div_wrapper_container div{width:100%;height:35px;}
 		  
 		  .goods_action li a:hover .goods_action_div_wrapper_container{
-				top:-35px;
+				top:-34.5px;
 			}
    /*帮助*/
    .helpTitBg{background:url(images/helpTitBg.gif) repeat-x left top; text-align:left; border:1px solid #c5e4ff; background-color:#fff;

@@ -139,6 +139,10 @@ if ($_REQUEST['act'] == 'insert')
             $db->query($sql);
         }
         insert_cat_recommend($cat['cat_recommend'], $cat_id);
+		
+		
+		banner_handler($_REQUEST,$cat_id);
+		
 
         admin_log($_POST['cat_name'], 'add', 'category');   // 记录管理员操作
         clear_cache_files();    // 清除缓存
@@ -152,6 +156,7 @@ if ($_REQUEST['act'] == 'insert')
 
         sys_msg($_LANG['catadd_succed'], 0, $link);
     }
+	
  }
 
 /*------------------------------------------------------ */
@@ -190,6 +195,38 @@ if ($_REQUEST['act'] == 'edit')
     {
         $attr_cat_id = 0;
     }
+	
+	
+	//拿到首页分类馆banner
+	$homepage_banner = get_banner_xml('/banner/homepage_banner_'.$cat_id.'.xml');
+	//拿到分类页banner
+	$img_list2 = get_banner_xml('/banner/category_page_banner_'.$cat_id.'.xml');
+	
+	$img_list_top    = array();
+	$img_list_right  = array();
+	$img_list_left   = array();
+	$img_list_bottom = array();
+	foreach ($homepage_banner as $key => $value){
+		if     ($value['position'] == 'top'){$img_list_top[] = $value;}
+		elseif ($value['position'] == 'right'){$img_list_right[] = $value;}
+		elseif ($value['position'] == 'left'){$img_list_left[] = $value;}
+		elseif ($value['position'] == 'bottom'){$img_list_bottom[] = $value;}
+	}
+	
+	
+	//showr($homepage_banner);
+	
+
+	$smarty->assign('img_list_top', $img_list_top);
+	$smarty->assign('img_list_right', $img_list_right);
+	$smarty->assign('img_list_left', $img_list_left);
+	$smarty->assign('img_list_bottom', $img_list_bottom);
+	$smarty->assign('img_list2',   $img_list2);
+	
+	
+	
+	
+	
 
     /* 模板赋值 */
     $smarty->assign('attr_list',        $attr_list); // 取得商品属性
@@ -253,23 +290,34 @@ if ($_REQUEST['act'] == 'update')
     admin_priv('cat_manage');
 
     /* 初始化变量 */
-    $cat_id              = !empty($_POST['cat_id'])       ? intval($_POST['cat_id'])     : 0;
-    $old_cat_name        = $_POST['old_cat_name'];
-    $cat['parent_id']    = !empty($_POST['parent_id'])    ? intval($_POST['parent_id'])  : 0;
-    $cat['sort_order']   = !empty($_POST['sort_order'])   ? intval($_POST['sort_order']) : 0;
-    $cat['keywords']     = !empty($_POST['keywords'])     ? trim($_POST['keywords'])     : '';
-    $cat['cat_desc']     = !empty($_POST['cat_desc'])     ? $_POST['cat_desc']           : '';
-    $cat['measure_unit'] = !empty($_POST['measure_unit']) ? trim($_POST['measure_unit']) : '';
-    $cat['cat_name']     = !empty($_POST['cat_name'])     ? trim($_POST['cat_name'])     : '';
-    $cat['is_show']      = !empty($_POST['is_show'])      ? intval($_POST['is_show'])    : 0;
-    $cat['show_in_nav']  = !empty($_POST['show_in_nav'])  ? intval($_POST['show_in_nav']): 0;
-    $cat['style']        = !empty($_POST['style'])        ? trim($_POST['style'])        : '';
-    $cat['grade']        = !empty($_POST['grade'])        ? intval($_POST['grade'])      : 0;
-    $cat['filter_attr']  = !empty($_POST['filter_attr'])  ? implode(',', array_unique(array_diff($_POST['filter_attr'],array(0)))) : 0;
-    $cat['cat_recommend']  = !empty($_POST['cat_recommend'])  ? $_POST['cat_recommend'] : array();
+    $cat_id           					  = !empty($_POST['cat_id'])       ? intval($_POST['cat_id'])     : 0;
+    $old_cat_name      					  = $_POST['old_cat_name'];
+    $cat['parent_id']  					  = !empty($_POST['parent_id'])    ? intval($_POST['parent_id'])  : 0;
+    $cat['sort_order']  				  = !empty($_POST['sort_order'])   ? intval($_POST['sort_order']) : 0;
+    $cat['keywords']     				  = !empty($_POST['keywords'])     ? trim($_POST['keywords'])     : '';
+    $cat['cat_desc']      				  = !empty($_POST['cat_desc'])     ? $_POST['cat_desc']           : '';
+    $cat['measure_unit']  				  = !empty($_POST['measure_unit']) ? trim($_POST['measure_unit']) : '';
+    $cat['cat_name']      				  = !empty($_POST['cat_name'])     ? trim($_POST['cat_name'])     : '';
+    $cat['is_show']       				  = !empty($_POST['is_show'])      ? intval($_POST['is_show'])    : 0;
+    $cat['show_in_nav']   				  = !empty($_POST['show_in_nav'])  ? intval($_POST['show_in_nav']): 0;
+    $cat['style']         				  = !empty($_POST['style'])        ? trim($_POST['style'])        : '';
+    $cat['grade']         				  = !empty($_POST['grade'])        ? intval($_POST['grade'])      : 0;
+    $cat['filter_attr']   				  = !empty($_POST['filter_attr'])  ? implode(',', array_unique(array_diff($_POST['filter_attr'],array(0)))) : 0;
+    $cat['cat_recommend']    			  = !empty($_POST['cat_recommend'])  ? $_POST['cat_recommend'] : array();
+	$cat['theme_color']                   = $_POST['theme_color']!="FFFFFF"     ? "#".$_POST['theme_color']     : '#361F5B';
+	$cat['show_banner_in_home_page']             = $_POST['show_banner_in_home_page'];
+	$cat['show_banner_in_category_page']  = $_POST['show_banner_in_category_page'];
+	//showr($_REQUEST);
+	//banner_handler($_REQUEST,$cat_id);return true;
+	banner_handler($_REQUEST,$cat_id,true);//update first;
+	banner_handler($_REQUEST,$cat_id);
+	
+	
+	
+	
+	
 
     /* 判断分类名是否重复 */
-
     if ($cat['cat_name'] != $old_cat_name)
     {
         if (cat_exists($cat['cat_name'],$cat['parent_id'], $cat_id))
@@ -583,6 +631,45 @@ if ($_REQUEST['act'] == 'remove')
     exit;
 }
 
+/*删除banner图片*/
+if ($_REQUEST['act'] == 'drop_image')
+{
+	$id     = $_REQUEST['img_id'];
+	$type   = $_REQUEST['type'];
+	$cat_id = $_REQUEST['cat_id'];
+	
+	if ($type == 0){$file_name = '/banner/homepage_banner_'.$cat_id.'.xml';}
+	else {$file_name = '/banner/category_page_banner_'.$cat_id.'.xml';}
+	
+	$banner_db = get_banner_xml($file_name);
+	
+	if (isset($banner_db[$id]))
+	{
+		$rt = $banner_db[$id];
+	}
+
+	if(file_exists(ROOT_PATH . $rt['src'])){
+		@unlink(ROOT_PATH . $rt['src']);
+	}
+	$temp = array();
+	foreach ($banner_db as $key => $val)
+	{
+		if ($key != $id)
+		{
+			$temp[] = $val;
+		}
+	}
+	put_banner_xml($temp,$file_name);
+	
+	clear_cache_files();
+	$content = array();
+	$content['id'] = $id;
+	$content['type'] = $type;
+		
+	make_json_result($content);
+	
+}
+
 /*------------------------------------------------------ */
 //-- PRIVATE FUNCTIONS
 /*------------------------------------------------------ */
@@ -715,5 +802,220 @@ function insert_cat_recommend($recommend_type, $cat_id)
         $GLOBALS['db']->query("DELETE FROM ". $GLOBALS['ecs']->table("cat_recommend") . " WHERE cat_id=" . $cat_id);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function banner_handler($request,$cat_id,$update=false){
+	
+	/*banner处理*/
+	$old = '';
+	if ($update === true){$old = 'old_';}
+	
+
+	
+	$banner_file = array();
+	$banner_file[$old. 'img_file_top'] = $old. 'img_file_top';
+	$banner_file[$old. 'img_file_right'] = $old. 'img_file_right';
+	$banner_file[$old. 'img_file_left'] = $old. 'img_file_left';
+	$banner_file[$old. 'img_file_bottom'] = $old. 'img_file_bottom';
+	$banner_file[$old. 'img_file2'] = $old. 'img_file2';
+	
+	$banner_desc = array();
+	$banner_desc[$old. 'img_file_top'] = $old. 'img_desc_top';
+	$banner_desc[$old. 'img_file_right'] = $old. 'img_desc_right';
+	$banner_desc[$old. 'img_file_left'] = $old. 'img_desc_left';
+	$banner_desc[$old. 'img_file_bottom'] = $old. 'img_desc_bottom';
+	$banner_desc[$old. 'img_file2'] = $old. 'img_desc2';
+	
+	$banner_url = array();
+	$banner_url[$old. 'img_file_top'] = $old. 'img_url_top';
+	$banner_url[$old. 'img_file_right'] = $old. 'img_url_right';
+	$banner_url[$old. 'img_file_left'] = $old. 'img_url_left';
+	$banner_url[$old. 'img_file_bottom'] = $old. 'img_url_bottom';
+	$banner_url[$old. 'img_file2'] = $old. 'img_url2';
+	
+	$banner_order = array();
+	$banner_order[$old. 'img_file_top'] = $old. 'img_order_top';
+	$banner_order[$old. 'img_file_right'] = $old. 'img_order_right';
+	$banner_order[$old. 'img_file_left'] = $old. 'img_order_left';
+	$banner_order[$old. 'img_file_bottom'] = $old. 'img_order_bottom';
+	$banner_order[$old. 'img_file2'] = $old. 'img_order2';
+	
+	$banner_position = array();
+	$banner_position[$old. 'img_file_top'] = $old. 'img_position_top';
+	$banner_position[$old. 'img_file_right'] = $old. 'img_position_right';
+	$banner_position[$old. 'img_file_left'] = $old. 'img_position_left';
+	$banner_position[$old. 'img_file_bottom'] = $old. 'img_position_bottom';
+	$banner_position[$old. 'img_file2'] = $old. 'img_position2';
+
+	$banner_show = array();
+	$banner_show[$old. 'img_file_top'] = $old. 'img_show_top';
+	$banner_show[$old. 'img_file_right'] = $old. 'img_show_right';
+	$banner_show[$old. 'img_file_left'] = $old. 'img_show_left';
+	$banner_show[$old. 'img_file_bottom'] = $old. 'img_show_bottom';
+	$banner_show[$old. 'img_file2'] = $old. 'img_show2';
+	
+	$banner_id = array();
+	$banner_id[$old. 'img_file_top'] = $old. 'img_id_top';
+	$banner_id[$old. 'img_file_right'] = $old. 'img_id_right';
+	$banner_id[$old. 'img_file_left'] = $old. 'img_id_left';
+	$banner_id[$old. 'img_file_bottom'] = $old. 'img_id_bottom';
+	$banner_id[$old. 'img_file2'] = $old. 'img_id2';	
+	
+	$banner_xml_filename = array();
+	$banner_xml_filename[$old. 'img_file_top'] = '/banner/homepage_banner_'.$cat_id.'.xml';
+	$banner_xml_filename[$old. 'img_file_right'] = '/banner/homepage_banner_'.$cat_id.'.xml';
+	$banner_xml_filename[$old. 'img_file_left'] = '/banner/homepage_banner_'.$cat_id.'.xml';
+	$banner_xml_filename[$old. 'img_file_bottom'] = '/banner/homepage_banner_'.$cat_id.'.xml';
+	$banner_xml_filename[$old. 'img_file2'] = '/banner/category_page_banner_'.$cat_id.'.xml';
+	//showr($_REQUEST);
+	//showr($banner_file);
+	
+	
+	
+		foreach ($banner_file as $key => $value){				
+			if ($update === false){ //新加
+				foreach ($_FILES[$key]['name'] as $k => $v){
+						if ($_FILES[$key]['error'][$k] == 0 && $_FILES[$key]['tmp_name'][$k] != ''){//没有error
+							$name = date('Ymd');
+							$random1 = rand(1, 99);
+							$random2 = rand(1, 99);
+							$name .= $random1 . $random2 . '.' . end(explode('.', $v));
+							$target = ROOT_PATH . DATA_DIR . '/afficheimg/' . $name;
+							if (move_upload_file($_FILES[$key]['tmp_name'][$k], $target)){
+								$src = DATA_DIR . '/afficheimg/' . $name;
+							}
+							// 获取banner_db数据
+							$banner_db = get_banner_xml($banner_xml_filename[$key]);
+							//showr($banner_db);
+
+							//拿到id
+							$id = 1;
+							if (!empty($banner_db)){
+								foreach ($banner_db as $banner_db_key => $banner_db_value){
+									if ($banner_db_value['id'] >= $id){$id = $banner_db_value['id'] + 1;}
+								}
+							}
+							//showr($banner_db);
+							// 插入新数据
+							//if ($request[$banner_desc[$key]][$k] == ''){$request[$banner_desc[$key]][$k] = 'none';}
+							array_unshift($banner_db, array('desc'=>$request[$banner_desc[$key]][$k], 'src'=>$src, 'url'=>$request[$banner_url[$key]][$k], 'order'=>$request[$banner_order[$key]][$k], 'position'=>$request[$banner_position[$key]][$k], 'id'=>$id, 'show'=>$request[$banner_show[$key]][$k]));
+							//showr($banner_db);
+							// 实现排序
+							$bannerdb_sort   = array();
+							$_bannerdb       = array();
+							foreach ($banner_db as $banner_db_key => $banner_db_value)
+							{
+								$bannerdb_sort[$banner_db_key] = $banner_db_value['order'];
+							}
+							asort($bannerdb_sort, SORT_NUMERIC);				
+							foreach ($bannerdb_sort as $banner_db_sort_key => $banner_db_sort_value)
+							{
+								$_bannerdb[] = $banner_db[$banner_db_sort_key];
+							}
+							unset($banner_db, $bannerdb_sort);
+							put_banner_xml($_bannerdb,$banner_xml_filename[$key]);
+						}
+					}
+				}
+				else{// 更新
+				//showr($request[$banner_id[$key]]);
+				
+					$banner_db = get_banner_xml($banner_xml_filename[$key]);
+					if (!empty($request[$banner_id[$key]])){
+						foreach ($request[$banner_id[$key]] as $id_key => $id_value){
+							$banner_db[$id_key]['desc'] = $request[$banner_desc[$key]][$id_key];
+							$banner_db[$id_key]['order'] = $request[$banner_order[$key]][$id_key];
+							$banner_db[$id_key]['url'] = $request[$banner_url[$key]][$id_key];
+							if (isset($request[$banner_show[$key]][$id_key]) === false || $request[$banner_show[$key]][$id_key] == ''){$request[$banner_show[$key]][$id_key] = 0;}
+							$banner_db[$id_key]['show'] = $request[$banner_show[$key]][$id_key];
+						}
+					}
+					$bannerdb_sort   = array();
+					$_bannerdb       = array();
+					foreach ($banner_db as $banner_db_key => $banner_db_value)
+					{
+						$bannerdb_sort[$banner_db_key] = $banner_db_value['order'];
+					}
+					asort($bannerdb_sort, SORT_NUMERIC);				
+					foreach ($bannerdb_sort as $banner_db_sort_key => $banner_db_sort_value)
+					{
+						$_bannerdb[] = $banner_db[$banner_db_sort_key];
+					}
+					unset($banner_db, $bannerdb_sort);
+					//showr($_bannerdb);
+					put_banner_xml($_bannerdb,$banner_xml_filename[$key]);
+				}
+		}
+	
+
+	
+		return true;
+}
+	
+	
+function get_banner_xml($file_name)
+{
+    $flashdb = array();
+    if (file_exists(ROOT_PATH . DATA_DIR . $file_name))
+    {
+        // 兼容v2.7.0及以前版本
+    if (!preg_match_all('/desc="([^"]*)"\ssrc="([^"]+)"\surl="([^"]*)"\sorder="([^"]*)"\sposition="([^"]*)"\sid="([^"]*)"\sshow="([^"]*)"/', file_get_contents(ROOT_PATH . DATA_DIR . $file_name), $t, PREG_SET_ORDER))
+        {
+            preg_match_all('/desc="([^"]*)"\ssrc="([^"]+)"\surl="([^"]*)"\sorder="([^"]*)"\sposition="([^"]*)"\sid="([^"]*)"\sshow="([^"]*)"/', file_get_contents(ROOT_PATH . DATA_DIR . $file_name), $t, PREG_SET_ORDER);
+        }
+//showr($t);
+        if (!empty($t))
+        {
+            foreach ($t as $key => $val)
+            {
+                //$val[4] = isset($val[4]) ? $val[4] : 0;
+                $flashdb[$val[6]] = array('desc'=>$val[1],'src'=>$val[2],'url'=>$val[3],'order'=>$val[4],'position'=>$val[5],'id'=>$val[6],'show'=>$val[7]);
+            }
+        }
+    }//showr($flashdb);
+    return $flashdb;
+	
+}
+
+
+function put_banner_xml($flashdb,$file_name)
+{			//showr($flashdb);	
+
+	 if (!empty($flashdb))
+    {
+        $xml = '<?xml version="1.0" encoding="' . EC_CHARSET . '"?><bcaster>';
+        foreach ($flashdb as $key => $val)
+        {
+            $xml .= '<item desc="' . $val['desc'] . '" src="' . $val['src'] . '" url="' . $val['url'] . '" order="' . $val['order'] . '" position="' . $val['position'] . '" id="' . $val['id'] . '" show="' . $val['show'] . '"/>';
+        }
+        $xml .= '</bcaster>';
+		
+        file_put_contents(ROOT_PATH . DATA_DIR . $file_name, $xml);
+    }
+    else
+    {
+        //@unlink(ROOT_PATH . DATA_DIR . $file_name);
+        $xml = '<?xml version="1.0" encoding="' . EC_CHARSET . '"?><bcaster>';
+        $xml .= '</bcaster>';
+        file_put_contents(ROOT_PATH . DATA_DIR . $file_name, $xml);
+    }
+	 
+
+}
+	
 
 ?>

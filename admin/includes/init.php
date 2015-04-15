@@ -79,6 +79,7 @@ else
     define('PHP_SELF', $_SERVER['SCRIPT_NAME']);
 }
 
+require(ROOT_PATH . 'includes/core.php');
 require(ROOT_PATH . 'includes/inc_constant.php');
 require(ROOT_PATH . 'includes/cls_ecshop.php');
 require(ROOT_PATH . 'includes/cls_error.php');

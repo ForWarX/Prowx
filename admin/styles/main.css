@@ -94,8 +94,8 @@ h1 .action-span1 {
 
 .main-div table {
   background: #FFF;
-  border-top: 10px solid #FFF;
-  border-bottom: 10px solid #FFF;
+  /*border-top: 10px solid #FFF;
+  border-bottom: 10px solid #FFF;*/
   width: 99%;
 }
 
@@ -847,3 +847,11 @@ em, cite, th {
 .cloud_close a{}
 .cloud_close img{ position:absolute; right:10px; top:8px; border:none}
 .Start315{border: 1px solid #CC0000; background: #ffffcc; padding: 10px; margin-bottom: 5px;}
+
+
+
+.gallery_table {-webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.3);
+-moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.3);
+box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.3);}
+.category_banner_catption{font-weight: 800;
+  color: #4BAB58;}

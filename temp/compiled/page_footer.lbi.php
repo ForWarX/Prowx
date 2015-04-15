@@ -6,25 +6,25 @@
    <tr>
    <td>
    <?php if ($this->_var['navigator_list']['bottom']): ?>
-   <?php $_from = $this->_var['navigator_list']['bottom']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'nav_0_30113700_1426703046');$this->_foreach['nav_bottom_list'] = array('total' => count($_from), 'iteration' => 0);
+   <?php $_from = $this->_var['navigator_list']['bottom']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'nav_0_86311200_1429025065');$this->_foreach['nav_bottom_list'] = array('total' => count($_from), 'iteration' => 0);
 if ($this->_foreach['nav_bottom_list']['total'] > 0):
-    foreach ($_from AS $this->_var['nav_0_30113700_1426703046']):
+    foreach ($_from AS $this->_var['nav_0_86311200_1429025065']):
         $this->_foreach['nav_bottom_list']['iteration']++;
 ?>
    <div style="float:left;padding:0px 20px;width:154px;">
     <table class="footer_table" border="0" cellspacing="0" cellpadding="0">
 		<tr>
 		<td>
-		<?php if (isset ( $this->_var['nav_0_30113700_1426703046']['bg_img_src'] )): ?>
-        <div class="help_nav" style="width:40px;height:40px;background:url(themes/test1/images/<?php echo $this->_var['nav_0_30113700_1426703046']['bg_img_src']; ?>) no-repeat center; "></div>
+		<?php if (isset ( $this->_var['nav_0_86311200_1429025065']['bg_img_src'] )): ?>
+        <div class="help_nav" style="width:40px;height:40px;background:url(themes/test1/images/<?php echo $this->_var['nav_0_86311200_1429025065']['bg_img_src']; ?>) no-repeat center; "></div>
 		<?php endif; ?>
 		</td>
 		<td>
-        <a style="font-size:1.2em;" href="<?php echo $this->_var['nav_0_30113700_1426703046']['url']; ?>" <?php if ($this->_var['nav_0_30113700_1426703046']['opennew'] == 1): ?> target="_blank" <?php endif; ?>><?php echo $this->_var['nav_0_30113700_1426703046']['name']; ?></a>
+        <a style="font-size:1.2em;" href="<?php echo $this->_var['nav_0_86311200_1429025065']['url']; ?>" <?php if ($this->_var['nav_0_86311200_1429025065']['opennew'] == 1): ?> target="_blank" <?php endif; ?>><?php echo $this->_var['nav_0_86311200_1429025065']['name']; ?></a>
 		</td>
 		</tr>
 		<tr height="8"><td colspan="2"></td></tr>
-		<?php $_from = $this->_var['nav_0_30113700_1426703046']['children']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'child');$this->_foreach['nav_bottom_list'] = array('total' => count($_from), 'iteration' => 0);
+		<?php $_from = $this->_var['nav_0_86311200_1429025065']['children']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'child');$this->_foreach['nav_bottom_list'] = array('total' => count($_from), 'iteration' => 0);
 if ($this->_foreach['nav_bottom_list']['total'] > 0):
     foreach ($_from AS $this->_var['child']):
         $this->_foreach['nav_bottom_list']['iteration']++;
@@ -33,7 +33,7 @@ if ($this->_foreach['nav_bottom_list']['total'] > 0):
 		<td style=""><div class="css-shapes-preview"></div>
 		</td>
 		<td>
-        <a style="font-size:0.9em;" href="<?php echo $this->_var['child']['url']; ?>" <?php if ($this->_var['nav_0_30113700_1426703046']['opennew'] == 1): ?> target="_blank" <?php endif; ?>><?php echo $this->_var['child']['title']; ?></a>
+        <a style="font-size:0.9em;" href="<?php echo $this->_var['child']['url']; ?>" <?php if ($this->_var['nav_0_86311200_1429025065']['opennew'] == 1): ?> target="_blank" <?php endif; ?>><?php echo $this->_var['child']['title']; ?></a>
 		</td>
 		</tr>
 		<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
